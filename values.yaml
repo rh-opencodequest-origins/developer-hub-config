@@ -1,0 +1,144 @@
+global:
+  clusterRouterBase: {{ cluster_subdomain }}
+  host: {{ backstage_host }}
+  dynamic:
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins:
+      - package: ./dynamic-plugins/dist/backstage-plugin-scaffolder-backend-module-gitlab-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-argocd-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-topology
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-tekton
+        disabled: false
+      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
+        disabled: false
+upstream:
+  postgresql:
+    auth:
+      username: postgres
+      database: backstage
+      existingSecret: backstage-postgresql
+      secretKeys:
+        userPasswordKey: postgres-password
+  backstage:
+    extraEnvVarsSecrets:
+      - gitlab-token
+      - argocd-password
+      - kubernetes-sa-token
+      - oauth-client
+    appConfig:
+      auth:
+        environment: production
+        providers:
+          oauth2Proxy: {}
+      signInPage: oauth2Proxy
+      integrations:
+        gitlab:
+          - apiBaseUrl: https://{{ gitlab_host }}/api/v4
+            baseUrl: https://{{ gitlab_host }}
+            host: {{ gitlab_host }}
+            token: ${GITLAB_TOKEN}          
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location, Template]
+        locations: []
+        providers:
+          keycloakOrg:
+            default:
+              baseUrl: https://{{ keycloak_host }}
+              realm: {{ keycloak_realm }}
+              loginRealm: {{ keycloak_login_realm }}
+              clientId: {{ keycloak_client_id }}
+              clientSecret: {{ keycloak_client_secret }}
+      techdocs:
+        builder: 'local'
+        publisher:
+          type: 'local'
+        generator:
+          runIn: local
+      argocd:
+        appLocatorMethods:
+          - type: 'config'
+            instances:
+              - name: main
+                url: https://{{ argocd_host }}
+                username: admin
+                password: ${ARGOCD_PASSWORD}
+      kubernetes:
+        serviceLocatorMethod:
+          type: multiTenant
+        clusterLocatorMethods:
+          - clusters:
+              - name: dev-cluster
+                url: {{ kubernetes_api_url }}
+                authProvider: serviceAccount
+                skipTLSVerify: true
+                serviceAccountToken: ${KUBERNETES_SA_TOKEN}
+            type: config
+        customResources:
+          - group: 'tekton.dev'
+            apiVersion: 'v1beta1'
+            plural: 'pipelineruns'
+          - group: 'tekton.dev'
+            apiVersion: 'v1beta1'
+            plural: 'taskruns'
+    extraEnvVars:
+      - name: NODE_OPTIONS
+        value: --no-node-snapshot
+      - name: BACKEND_SECRET
+        value: {{ backstage_backend_secret }}
+      - name: NODE_TLS_REJECT_UNAUTHORIZED
+        value: "0"
+    extraContainers:
+      - name: oauth2-proxy
+        env:
+          - name: OAUTH2_PROXY_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: oauth-client
+                key: OAUTH_CLIENT_ID
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth-client
+                key: OAUTH_CLIENT_SECRET
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            value: {{ oauth2_proxy_cookie_secret }}
+          - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+            value: {{ oauth2_proxy_oidc_issuer }}
+          - name: OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY
+            value: 'true'
+        ports:
+          - name: oauth2-proxy
+            containerPort: 4180
+            protocol: TCP
+        imagePullPolicy: IfNotPresent
+        image: 'quay.io/oauth2-proxy/oauth2-proxy:latest'
+        args:
+          - '--provider=oidc'
+          - '--email-domain=*'
+          - '--upstream=http://localhost:7007'
+          - '--http-address=0.0.0.0:4180'
+          - '--skip-provider-button'
+          - '--insecure-oidc-allow-unverified-email=true'
+  service:
+    ports:
+      backend: 4180
+      targetPort: oauth2-proxy
+route:
+  host: {{ backstage_host }}
