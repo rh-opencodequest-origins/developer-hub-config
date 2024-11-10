@@ -65,6 +65,10 @@ upstream:
               loginRealm: {{ keycloak_login_realm }}
               clientId: {{ keycloak_client_id }}
               clientSecret: {{ keycloak_client_secret }}
+              schedule:
+                frequency: { minutes: 2 }
+                timeout: { minutes: 1 }
+                initialDelay: { seconds: 15 }
       techdocs:
         builder: 'local'
         publisher:
