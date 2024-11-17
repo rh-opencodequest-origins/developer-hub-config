@@ -42,17 +42,6 @@ upstream:
       - kubernetes-sa-token
       - oauth-client
     appConfig:
-      app:
-        title: Red Hat Developer Hub
-        baseUrl: https://{{ backstage_host }}
-      backend:
-        baseUrl: https://{{ backstage_host }}
-        cors:
-          origin: https://{{ backstage_host }}
-        auth:
-          keys:
-            - secret:
-                $env: BACKEND_SECRET
       auth:
         session:
           secret: ${BACKEND_SECRET}
