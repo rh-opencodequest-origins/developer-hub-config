@@ -55,7 +55,7 @@ upstream:
             token: ${GITLAB_TOKEN}          
       catalog:
         rules:
-          - allow: [Component, System, API, Resource, Location, Template]
+          - allow: [Component, System, API, Resource, Location, Template, Domain]
         locations: []
         providers:
           keycloakOrg:
