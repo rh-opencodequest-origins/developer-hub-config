@@ -42,21 +42,29 @@ upstream:
       - kubernetes-sa-token
       - oauth-client
     appConfig:
+      # ============ AUTHENTICATION ============ #
+      # This is a development and testing authentication configuration
       auth:
-        session:
-          secret: ${BACKEND_SECRET}
-        environment: production
         providers:
-          oidc:
-            production:
-              prompt: auto
-              metadataUrl: https://{{ keycloak_host }}/realms/{{ keycloak_realm }}/.well-known/openid-configuration
-              clientId: ${OAUTH_CLIENT_ID}
-              clientSecret: ${OAUTH_CLIENT_SECRET}
-              signIn:
-                resolvers:
-                  - resolver: preferredUsernameMatchingUserEntityName
-      signInPage: oidc
+          guest:
+            dangerouslyAllowOutsideDevelopment: true
+      # Configuration required to enable OpenID Connect authentication
+      # auth:
+      #   session:
+      #     secret: ${BACKEND_SECRET}
+      #   environment: production
+      #   providers:
+      #     oidc:
+      #       production:
+      #         prompt: auto
+      #         metadataUrl: https://{{ keycloak_host }}/realms/{{ keycloak_realm }}/.well-known/openid-configuration
+      #         clientId: ${OAUTH_CLIENT_ID}
+      #         clientSecret: ${OAUTH_CLIENT_SECRET}
+      #         signIn:
+      #           resolvers:
+      #             - resolver: preferredUsernameMatchingUserEntityName
+      # signInPage: oidc
+      # ============ AUTHENTICATION ============ #
       integrations:
         gitlab:
           - apiBaseUrl: https://{{ gitlab_host }}/api/v4
@@ -68,17 +76,19 @@ upstream:
           - allow: [Component, System, API, Resource, Location, Template]
         locations: []
         providers:
-          keycloakOrg:
-            default:
-              baseUrl: https://{{ keycloak_host }}
-              realm: {{ keycloak_realm }}
-              loginRealm: {{ keycloak_login_realm }}
-              clientId: {{ keycloak_client_id }}
-              clientSecret: {{ keycloak_client_secret }}
-              schedule:
-                frequency: { minutes: 2 }
-                timeout: { minutes: 1 }
-                initialDelay: { seconds: 15 }
+          # ============ CATALOG PROVIDERS ============
+          # keycloakOrg:
+          #   default:
+          #     baseUrl: https://{{ keycloak_host }}
+          #     realm: {{ keycloak_realm }}
+          #     loginRealm: {{ keycloak_login_realm }}
+          #     clientId: {{ keycloak_client_id }}
+          #     clientSecret: {{ keycloak_client_secret }}
+          #     schedule:
+          #       frequency: { minutes: 2 }
+          #       timeout: { minutes: 1 }
+          #       initialDelay: { seconds: 15 }
+          # ============ CATALOG PROVIDERS ============
       techdocs:
         builder: 'local'
         publisher:
