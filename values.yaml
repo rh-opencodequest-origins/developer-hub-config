@@ -17,10 +17,6 @@ global:
         disabled: false
       - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-tekton
         disabled: false
-      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
-        disabled: false
-      - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
-        disabled: false
       - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
         disabled: false
       - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
@@ -95,14 +91,6 @@ upstream:
           type: 'local'
         generator:
           runIn: local
-      argocd:
-        appLocatorMethods:
-          - type: 'config'
-            instances:
-              - name: main
-                url: https://{{ argocd_host }}
-                username: admin
-                password: ${ARGOCD_PASSWORD}
       kubernetes:
         serviceLocatorMethod:
           type: multiTenant
