@@ -122,6 +122,14 @@ upstream:
           type: 'local'
         generator:
           runIn: local
+      argocd:
+        appLocatorMethods:
+          - type: 'config'
+            instances:
+              - name: main
+                url: https://{{ argocd_host }}
+                username: admin
+                password: ${ARGOCD_PASSWORD}
       kubernetes:
         serviceLocatorMethod:
           type: multiTenant
