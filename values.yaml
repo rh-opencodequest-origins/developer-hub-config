@@ -19,15 +19,18 @@ global:
         disabled: false
       - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
         disabled: false
-      - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
-        disabled: false
-      - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
-        disabled: false
+      # ============ DYNAMIC_PLUGINS_IMPORT_COMPONENTS ============ #        
+
+      # - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-gitlab-dynamic
+      #   disabled: false  
+      
       # ============ DYNAMIC_PLUGINS_IMPORT_COMPONENTS ============ #
       
       # - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-module-utils-dynamic
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-gitlab-dynamic
       #   disabled: false
 
       # ============ DYNAMIC_PLUGINS_IMPORT_COMPONENTS ============ #
@@ -80,11 +83,25 @@ upstream:
           - allow: [Component, System, API, Resource, Location, Template, Domain]
         locations: []
         providers:
-          # ============ AUTO_DISCOVERY_IMPORT_COMPONENTS ============ #
+          # ============ GITLAB_CATALOG_PROVIDER ============ #
 
           # gitlab:
+          #   default:
+          #     host: gitlab-gitlab.{cluster_subdomain}
+          #     branch: main
+          #     fallbackBranch: master
+          #     skipForkedRepos: true
+          #     entityFilename: catalog-info.yaml
+          #     schedule:
+          #       frequency: { minutes: 2 }
+          #       timeout: { minutes: 3 }
+          #       initialDelay: { seconds: 15 }
+
+          # ============ GITLAB_CATALOG_PROVIDER ============ #
+          # ============ AUTO_DISCOVERY_IMPORT_COMPONENTS ============ #
+
           #   envelop-catalog-entity:
-          #     host: gitlab-gitlab.{openshift_cluster_ingress_domain}
+          #     host: gitlab-gitlab.{cluster_subdomain}
           #     filters:
           #       branch: main
           #     skipForkedRepos: true
@@ -102,7 +119,6 @@ upstream:
 
           # ============ AUTO_DISCOVERY_IMPORT_COMPONENTS ============ #
 
-          
           # ============ CATALOG PROVIDERS ============
           
           # keycloakOrg:
@@ -118,6 +134,8 @@ upstream:
           #       initialDelay: { seconds: 15 }
           
           # ============ CATALOG PROVIDERS ============
+
+
       techdocs:
         builder: 'local'
         publisher:
