@@ -104,6 +104,7 @@ upstream:
 
           
           # ============ CATALOG PROVIDERS ============
+          
           # keycloakOrg:
           #   default:
           #     baseUrl: https://{{ keycloak_host }}
@@ -115,6 +116,7 @@ upstream:
           #       frequency: { minutes: 2 }
           #       timeout: { minutes: 1 }
           #       initialDelay: { seconds: 15 }
+          
           # ============ CATALOG PROVIDERS ============
       techdocs:
         builder: 'local'
