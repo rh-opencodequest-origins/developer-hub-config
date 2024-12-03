@@ -87,7 +87,7 @@ upstream:
 
           # gitlab:
           #   default:
-          #     host: gitlab-gitlab.{cluster_subdomain}
+          #     host: gitlab-gitlab.{{ cluster_subdomain }}
           #     branch: main
           #     fallbackBranch: master
           #     skipForkedRepos: true
@@ -101,7 +101,7 @@ upstream:
           # ============ AUTO_DISCOVERY_IMPORT_COMPONENTS ============ #
 
           #   envelop-catalog-entity:
-          #     host: gitlab-gitlab.{cluster_subdomain}
+          #     host: gitlab-gitlab.{{ cluster_subdomain }}
           #     filters:
           #       branch: main
           #     skipForkedRepos: true
