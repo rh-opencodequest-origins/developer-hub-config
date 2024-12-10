@@ -19,31 +19,30 @@ global:
         disabled: false
       - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
         disabled: false
-      # --- TECHDOCS_GITLAB --- #        
+      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
+        disabled: false
 
+      ## --- TECHDOCS_GITLAB ---
       # - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
       #   disabled: false
       # - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
       #   disabled: false
       # - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-gitlab-dynamic
-      #   disabled: false  
-      # --- TECHDOCS_GITLAB --- #        
+      #   disabled: false
+      ## --- TECHDOCS_GITLAB ---
 
-      # --- DYNAMIC_PLUGINS_IMPORT_COMPONENTS --- #
-      
+      ## --- DYNAMIC_PLUGINS_IMPORT_COMPONENTS ---
       # - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-module-utils-dynamic
       #   disabled: false
+      ## --- DYNAMIC_PLUGINS_IMPORT_COMPONENTS ---
 
-      # --- DYNAMIC_PLUGINS_IMPORT_COMPONENTS --- #
+      ## --- RBAC ---
+      # - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-rbac
+      #   disabled: false
+      ## --- RBAC ---
 
-      # --- RBAC --- #
-      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
-        disabled: false
-      - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
-        disabled: false
-      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-rbac
-        disabled: false
-      # --- RBAC --- #
 upstream:
   postgresql:
     auth:
@@ -59,13 +58,14 @@ upstream:
       - kubernetes-sa-token
       - oauth-client
     appConfig:
-      # --- AUTHENTICATION --- #
-      # This is a development and testing authentication configuration
+
+      ## --- AUTHENTICATION --- 
+      ## This is a development and testing authentication configuration
       auth:
         providers:
           guest:
             dangerouslyAllowOutsideDevelopment: true
-      # Configuration required to enable OpenID Connect authentication
+      ## Configuration required to enable OpenID Connect authentication
       # auth:
       #   session:
       #     secret: ${BACKEND_SECRET}
@@ -81,7 +81,8 @@ upstream:
       #           resolvers:
       #             - resolver: preferredUsernameMatchingUserEntityName
       # signInPage: oidc
-      # --- AUTHENTICATION --- #
+      ## --- AUTHENTICATION --- #
+
       integrations:
         gitlab:
           - apiBaseUrl: https://{{ gitlab_host }}/api/v4
@@ -93,8 +94,8 @@ upstream:
           - allow: [Component, System, API, Resource, Location, Template, Domain]
         locations: []
         providers:
-          # --- GITLAB_CATALOG_PROVIDER --- #
-
+          
+          ## --- GITLAB_CATALOG_PROVIDER ---
           # gitlab:
           #   default:
           #     host: gitlab-gitlab.{{ cluster_subdomain }}
@@ -106,10 +107,9 @@ upstream:
           #       frequency: { minutes: 2 }
           #       timeout: { minutes: 3 }
           #       initialDelay: { seconds: 15 }
+          ## --- GITLAB_CATALOG_PROVIDER ---
 
-          # --- GITLAB_CATALOG_PROVIDER --- #
-          # --- AUTO_DISCOVERY_IMPORT_COMPONENTS --- #
-
+          ## --- AUTO_DISCOVERY_IMPORT_COMPONENTS ---
           #   envelop-catalog-entity:
           #     host: gitlab-gitlab.{{ cluster_subdomain }}
           #     filters:
@@ -126,11 +126,9 @@ upstream:
           #         seconds: 15
           #       timeout:
           #         minutes: 3
+          # --- AUTO_DISCOVERY_IMPORT_COMPONENTS ---
 
-          # --- AUTO_DISCOVERY_IMPORT_COMPONENTS --- #
-
-          # --- KEYCLOAK_CATALOG_PROVIDERS ---
-          
+          ## --- KEYCLOAK_CATALOG_PROVIDERS ---
           # keycloakOrg:
           #   default:
           #     baseUrl: https://{{ keycloak_host }}
@@ -142,8 +140,7 @@ upstream:
           #       frequency: { minutes: 2 }
           #       timeout: { minutes: 1 }
           #       initialDelay: { seconds: 15 }
-          
-          # --- KEYCLOAK_CATALOG_PROVIDERS ---
+          ## --- KEYCLOAK_CATALOG_PROVIDERS ---
 
 
       techdocs:
@@ -178,16 +175,17 @@ upstream:
           - group: 'tekton.dev'
             apiVersion: 'v1beta1'
             plural: 'taskruns'
-      # --- RBAC --- #
-      permission:
-        enabled: true
-        rbac:
-          admin:
-            users:
-              - name: user:default/pe1
-              - name: user:default/pe2
-          policies-csv-file: ./rbac/rbac-policy.csv
-      # --- RBAC --- #
+      
+      ## --- RBAC --- #
+      # permission:
+      #   enabled: true
+      #   rbac:
+      #     admin:
+      #       users:
+      #         - name: user:default/pe1
+      #         - name: user:default/pe2
+      #     policies-csv-file: ./rbac/rbac-policy.csv
+      ## --- RBAC --- #
 
     extraEnvVars:
       - name: NODE_OPTIONS
@@ -197,43 +195,44 @@ upstream:
       - name: NODE_TLS_REJECT_UNAUTHORIZED
         value: "0"
     
-    # --- RBAC --- #
-    extraVolumeMounts:
-      - name: dynamic-plugins-root
-        mountPath: /opt/app-root/src/dynamic-plugins-root
-      - name: audit-log-data
-        mountPath: /var/log/audit
-      - name: rbac-policy
-        mountPath: opt/app-root/src/rbac
-    extraVolumes:
-      - name: dynamic-plugins-root
-        persistentVolumeClaim:
-          claimName: '{{ printf "%s-dynamic-plugins-root" .Release.Name }}'
-      - name: audit-log-data
-        persistentVolumeClaim:
-          claimName: '{{ printf "%s-audit-log" .Release.Name }}'
-      - name: dynamic-plugins
-        configMap:
-          defaultMode: 420
-          name: '{{ printf "%s-dynamic-plugins" .Release.Name }}'
-          optional: true
-      - name: dynamic-plugins-npmrc
-        secret:
-          defaultMode: 420
-          optional: true
-          secretName: '{{ printf "%s-dynamic-plugins-npmrc" .Release.Name }}'
-      - name: dynamic-plugins-registry-auth
-        secret:
-          defaultMode: 416
-          optional: true
-          secretName: '{{ printf "%s-dynamic-plugins-registry-auth" .Release.Name }}'
-      - name: npmcacache
-        emptyDir: {}
-      - name: rbac-policy
-        configMap:
-          name: rbac-policy
-          defaultMode: 420
-    # --- RBAC --- #
+    ## --- RBAC --- #
+    # extraVolumeMounts:
+    #   - name: dynamic-plugins-root
+    #     mountPath: /opt/app-root/src/dynamic-plugins-root
+    #   - name: audit-log-data
+    #     mountPath: /var/log/audit
+    #   - name: rbac-policy
+    #     mountPath: opt/app-root/src/rbac
+    # extraVolumes:
+    #   - name: dynamic-plugins-root
+    #     persistentVolumeClaim:
+    #       claimName: '{{ printf "%s-dynamic-plugins-root" .Release.Name }}'
+    #   - name: audit-log-data
+    #     persistentVolumeClaim:
+    #       claimName: '{{ printf "%s-audit-log" .Release.Name }}'
+    #   - name: dynamic-plugins
+    #     configMap:
+    #       defaultMode: 420
+    #       name: '{{ printf "%s-dynamic-plugins" .Release.Name }}'
+    #       optional: true
+    #   - name: dynamic-plugins-npmrc
+    #     secret:
+    #       defaultMode: 420
+    #       optional: true
+    #       secretName: '{{ printf "%s-dynamic-plugins-npmrc" .Release.Name }}'
+    #   - name: dynamic-plugins-registry-auth
+    #     secret:
+    #       defaultMode: 416
+    #       optional: true
+    #       secretName: '{{ printf "%s-dynamic-plugins-registry-auth" .Release.Name }}'
+    #   - name: npmcacache
+    #     emptyDir: {}
+    #   - name: rbac-policy
+    #     configMap:
+    #       name: rbac-policy
+    #       defaultMode: 420
+    ## --- RBAC --- #
+
   service:
     ports:
       backend: 7007
