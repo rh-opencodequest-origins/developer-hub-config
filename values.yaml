@@ -58,6 +58,10 @@ upstream:
       - kubernetes-sa-token
       - oauth-client
     appConfig:
+      ## --- APP TITLE ---
+      # app:
+      #   title: PE Developer Hub
+      ## --- APP TITLE ---
 
       ## --- AUTHENTICATION --- 
       ## This is a development and testing authentication configuration
