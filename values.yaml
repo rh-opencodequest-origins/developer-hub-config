@@ -24,14 +24,14 @@ global:
       - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
         disabled: false
 
-      ## --- TECHDOCS_GITLAB ---
+      ## --- TECHDOCS_PLUGIN ---
       # - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
       #   disabled: false
       # - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
       #   disabled: false
       # - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-gitlab-dynamic
       #   disabled: false
-      ## --- TECHDOCS_GITLAB ---
+      ## --- TECHDOCS_PLUGIN ---
 
       ## --- DYNAMIC_PLUGINS_IMPORT_COMPONENTS ---
       # - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-module-utils-dynamic
@@ -142,13 +142,14 @@ upstream:
           #       initialDelay: { seconds: 15 }
           ## --- KEYCLOAK_CATALOG_PROVIDERS ---
 
-
-      techdocs:
-        builder: 'local'
-        publisher:
-          type: 'local'
-        generator:
-          runIn: local
+      ## --- TECHDOCS_CONFIG ---
+      # techdocs:
+      #   builder: 'local'
+      #   publisher:
+      #     type: 'local'
+      #   generator:
+      #     runIn: local
+      ## --- TECHDOCS_CONFIG ---
       argocd:
         appLocatorMethods:
           - type: 'config'
