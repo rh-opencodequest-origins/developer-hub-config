@@ -43,7 +43,7 @@ global:
       ## --- DYNAMIC_PLUGINS_IMPORT_COMPONENTS ---
 
       ## --- RBAC ---
-      # - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-rbac
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
       #   disabled: false
       ## --- RBAC ---
 
