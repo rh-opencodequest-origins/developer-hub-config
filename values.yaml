@@ -134,7 +134,7 @@ upstream:
           #         seconds: 15
           #       timeout:
           #         minutes: 3
-          # --- AUTO_DISCOVERY_IMPORT_COMPONENTS ---
+          ## --- AUTO_DISCOVERY_IMPORT_COMPONENTS ---
 
           ## --- KEYCLOAK_CATALOG_PROVIDERS ---
           # keycloakOrg:
