@@ -329,5 +329,12 @@ upstream:
     ports:
       backend: 7007
       targetPort: backend
+  ## --- MONITORING ---
+  # metrics:
+  #   serviceMonitor:
+  #     enabled: true
+  #     path: /metrics
+  ## --- MONITORING ---      
+
 route:
   host: {{ backstage_host }}
