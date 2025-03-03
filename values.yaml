@@ -203,14 +203,14 @@ upstream:
           ## --- GITLAB_CATALOG_PROVIDER ---
 
           ## --- AUTO_DISCOVERY_IMPORT_COMPONENTS ---
-          #   envelop-catalog-entity:
+          #   all-location-entity:
           #     host: gitlab-gitlab.{{ cluster_subdomain }}
           #     filters:
           #       branch: main
           #     skipForkedRepos: true
-          #     entityFilename: envelope.yaml
-          #     catalogPath: /**/envelope.yaml
-          #     projectPattern: \b(envelope\w*)
+          #     entityFilename: all-location.yaml
+          #     catalogPath: /**/all-location.yaml
+          #     projectPattern: \b(all-location\w*)
           #     excludeRepos: []
           #     schedule:
           #       frequency:
