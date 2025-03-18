@@ -49,19 +49,19 @@ global:
 
       ## --- ORCHESTRATOR PLUGIN ---
       # - disabled: false
-      #   package: "@redhat/backstage-plugin-orchestrator-backend-dynamic@1.3.0"
-      #   integrity: sha512-Th5vmwyhHyhURwQo28++PPHTvxGSFScSHPJyofIdE5gTAb87ncyfyBkipSDq7fwj4L8CQTXa4YP6A2EkHW1npg==
+      #   package: "@redhat/backstage-plugin-orchestrator-backend-dynamic@1.4.0"
+      #   integrity: sha512-2aOHDLFrGMAtyHFiyGZwVBZ9Op+TmKYUwfZxwoaGJ1s6JSy/0qgqineEEE0K3dn/f17XBUj+H1dwa5Al598Ugw==
       #   pluginConfig:
       #     orchestrator:
       #       dataIndexService:
       #         url: http://{{ orchestrator_sonataflow_data_index_service }}
       # - disabled: false
-      #   package: "@redhat/backstage-plugin-orchestrator@1.3.0"
-      #   integrity: sha512-A/twx1SOOGDQjglLzOxQikKO0XOdPP1jh2lj9Y/92bLox8mT+eaZpub8YLwR2mb7LsUIUImg+U6VnKwoAV9ATA==
+      #   package: "@redhat/backstage-plugin-orchestrator@1.4.0"
+      #   integrity: sha512-2yasbfBZ3iKntArIfK+hk9tvv4b/dy9+WKXOcWIotqkI1gv+Nhvy+m55KAUWi2vmfM0rj3EoG6YP+3Zajn1KyA==
       #   pluginConfig:
       #     dynamicPlugins:
       #       frontend:
-      #         janus-idp.backstage-plugin-orchestrator:
+      #         red-hat-developer-hub.backstage-plugin-orchestrator:
       #           appIcons:
       #             - importName: OrchestratorIcon
       #               module: OrchestratorPlugin
@@ -74,34 +74,13 @@ global:
       #               module: OrchestratorPlugin
       #               path: /orchestrator
       # - disabled: false
-      #   package: "@redhat/plugin-notifications-dynamic@1.3.0"
-      #   integrity: sha512-iYLgIy0YdP/CdTLol07Fncmo9n0J8PdIZseiwAyUt9RFJzKIXmoi2CpQLPKMx36lEgPYUlT0rFO81Ie2CSis4Q==
-      #   pluginConfig:
-      #     dynamicPlugins:
-      #       frontend:
-      #         redhat.plugin-notifications:
-      #           dynamicRoutes:
-      #             - importName: NotificationsPage
-      #               menuItem:
-      #                 config:
-      #                   props:
-      #                     titleCounterEnabled: true
-      #                     webNotificationsEnabled: false
-      #                 importName: NotificationsSidebarItem
-      #               path: /notifications
+      #   package: "./dynamic-plugins/dist/backstage-plugin-notifications"
       # - disabled: false
-      #   package: "@redhat/plugin-signals-dynamic@1.3.0"
-      #   integrity: sha512-+E8XeTXcG5oy+aNImGj/MY0dvEkP7XAsu4xuZjmAqOHyVfiIi0jnP/QDz8XMbD1IjCimbr/DMUZdjmzQiD0hSQ==
-      #   pluginConfig:
-      #     dynamicPlugins:
-      #       frontend:
-      #         redhat.plugin-signals: {}
+      #   package: "./dynamic-plugins/dist/backstage-plugin-signals"
       # - disabled: false
-      #   package: "@redhat/plugin-notifications-backend-dynamic@1.3.0"
-      #   integrity: sha512-Pw9Op/Q+1MctmLiVvQ3M+89tkbWkw8Lw0VfcwyGSMiHpK/Xql1TrSFtThtLlymRgeCSBgxHYhh3MUusNQX08VA==
+      #   package: "./dynamic-plugins/dist/backstage-plugin-notifications-backend-dynamic"
       # - disabled: false
-      #   package: "@redhat/plugin-signals-backend-dynamic@1.3.0"
-      #   integrity: sha512-5Bl6C+idPXtquQxMZW+bjRMcOfFYcKxcGZZFv2ITkPVeY2zzxQnAz3vYHnbvKRSwlQxjIyRXY6YgITGHXWT0nw==
+      #   package: "./dynamic-plugins/dist/backstage-plugin-signals-backend-dynamic"
       ## --- ORCHESTRATOR PLUGIN ---
 
 upstream:
