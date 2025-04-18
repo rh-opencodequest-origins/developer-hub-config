@@ -286,18 +286,18 @@ upstream:
     #   - name: dynamic-plugins
     #     configMap:
     #       defaultMode: 420
-    #       name: '{{ printf "%s-dynamic-plugins" .Release.Name }}'
+    #       name: '{{ '{{ printf "%s-dynamic-plugins" .Release.Name }}' }}'
     #       optional: true
     #   - name: dynamic-plugins-npmrc
     #     secret:
     #       defaultMode: 420
     #       optional: true
-    #       secretName: '{{ printf "%s-dynamic-plugins-npmrc" .Release.Name }}'
+    #       secretName: '{{ '{{ printf "%s-dynamic-plugins-npmrc" .Release.Name }}' }}'
     #   - name: dynamic-plugins-registry-auth
     #     secret:
     #       defaultMode: 416
     #       optional: true
-    #       secretName: '{{ printf "%s-dynamic-plugins-registry-auth" .Release.Name }}'
+    #       secretName: '{{ '{{ printf "%s-dynamic-plugins-registry-auth" .Release.Name }}' }}'
     #   - name: npmcacache
     #     emptyDir: {}
     #   - name: temp
