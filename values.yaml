@@ -7,7 +7,7 @@ global:
     plugins:
       # Temporary workaround to patch GitLab scaffolder MR creation (https://github.com/backstage/backstage/pull/28703)
       # We should have a fix in RHDH 1.6
-      - package: oci://quay.io/evanshortiss/backstage-plugin-scaffolder-backend-module-gitlab-dynamic:0.8.0!backstage-plugin-scaffolder-backend-module-gitlab
+      - package: oci://quay.io/evanshortiss/backstage-plugin-scaffolder-backend-module-gitlab-dynamic:0.8.1!backstage-plugin-scaffolder-backend-module-gitlab
       # - package: ./dynamic-plugins/dist/backstage-plugin-scaffolder-backend-module-gitlab-dynamic
         disabled: false
       - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-argocd-dynamic
