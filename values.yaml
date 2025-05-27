@@ -329,7 +329,7 @@ upstream:
           runAsNonRoot: true
           seccompProfile:
             type: "RuntimeDefault"
-        image: '{{ include "backstage.image" . }}'
+        image: '{{ '{{ include "backstage.image" . }}' }}'
         command:
           - ./install-dynamic-plugins.sh
           - /dynamic-plugins-root
