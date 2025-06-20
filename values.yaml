@@ -151,9 +151,6 @@ upstream:
       ## --- ADOPTION INSIGHTS ---
       #   analytics:
       #     adoptionInsights:
-      #       maxBufferSize: 20 
-      #       flushInterval: 5000 
-      #       debug: false 
       #       licensedUsers: 15 
       ## --- ADOPTION INSIGHTS ---
 
