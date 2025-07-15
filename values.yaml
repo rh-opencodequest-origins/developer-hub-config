@@ -50,30 +50,6 @@ global:
       #   disabled: false
       ## --- RBAC ---
 
-      ## --- ADOPTION INSIGHTS PLUGIN ---
-      #- package: ./dynamic-plugins/dist/backstage-community-plugin-analytics-provider-segment
-      #  disabled: true
-      #- package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/red-hat-developer-hub-backstage-plugin-adoption-insights:bs_1.35.1__0.0.2!red-hat-developer-hub-backstage-plugin-adoption-insights
-      #  disabled: false
-      #  pluginConfig:
-      #    dynamicPlugins:
-      #      frontend:
-      #        red-hat-developer-hub.backstage-plugin-adoption-insights:
-      #          appIcons:
-      #            - name: adoptionInsightsIcon
-      #              importName: AdoptionInsightsIcon
-      #          dynamicRoutes:
-      #            - path: /adoption-insights
-      #              importName: AdoptionInsightsPage
-      #              menuItem:
-      #                icon: adoptionInsightsIcon
-      #                text: Adoption Insights
-      #          menuItems:
-      #            adoption-insights:
-      #              parent: admin
-      #              icon: adoptionInsightsIcon
-      ## --- ADOPTION INSIGHTS PLUGIN ---
-
       ## --- ORCHESTRATOR PLUGIN ---
       # - disabled: false
       #   package: "@redhat/backstage-plugin-orchestrator-backend-dynamic@1.5.1"
@@ -177,15 +153,6 @@ upstream:
       #     adoptionInsights:
       #       licensedUsers: 15 
       ## --- ADOPTION INSIGHTS ---
-
-      ## --- ADOPTION INSIGHTS PLUGIN ---
-      # analytics:
-      #    adoptionInsights:
-      #      maxBufferSize: 25
-      #      flushInterval: 6000
-      #      debug: false
-      #      licensedUsers: 1000
-      ## --- ADOPTION INSIGHTS PLUGIN ---
 
       ## --- AUTHENTICATION ---
       ## This is a development and testing authentication configuration
