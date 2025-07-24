@@ -213,7 +213,16 @@ upstream:
       catalog:
         rules:
           - allow: [Component, System, API, Resource, Location, Template, Domain]
-        locations: []
+        locations:
+          - type: url
+            target: https://{{ gitlab_host }}/rhdh/template-quarkus-simple/-/blob/main/template.yaml?ref_type=head
+          - type: url
+            target: https://{{ gitlab_host }}/rhdh/import-existing-api-template/-/blob/main/template.yaml
+          - type: url
+            target: https://{{ gitlab_host }}/rhdh/import-existing-app-template/-/blob/main/template.yaml
+          - type: url
+            target: https://{{ gitlab_host }}/rhdh/rhdh-entities/-/blob/main/locations.yaml
+
         providers:
 
           ## --- GITLAB_CATALOG_PROVIDER ---
