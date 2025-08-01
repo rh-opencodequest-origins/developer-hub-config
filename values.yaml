@@ -317,7 +317,6 @@ upstream:
         value: {{ backstage_backend_secret }}
       - name: NODE_TLS_REJECT_UNAUTHORIZED
         value: "0"
-    ## --- RBAC --- #
     extraVolumeMounts:
       - name: dynamic-plugins-root
         mountPath: /opt/app-root/src/dynamic-plugins-root
@@ -352,7 +351,6 @@ upstream:
         configMap:
           name: rbac-policy
           defaultMode: 420
-    ## --- RBAC --- #
 
     initContainers:
       - name: install-dynamic-plugins
