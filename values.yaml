@@ -132,7 +132,7 @@ upstream:
     auth:
       username: postgres
       database: backstage
-      existingSecret: backstage-postgresql
+      existingSecret: {{ postgresql_existingSecret }}
       secretKeys:
         userPasswordKey: postgres-password
   backstage:
