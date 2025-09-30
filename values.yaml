@@ -403,10 +403,10 @@ upstream:
       targetPort: backend
 
   ## --- MONITORING ---
-  # metrics:
-  #   serviceMonitor:
-  #     enabled: true
-  #     path: /metrics
+  metrics:
+    serviceMonitor:
+      enabled: true
+      path: /metrics
   ## --- MONITORING ---
 
 route:
